@@ -1,0 +1,87 @@
+body {
+    font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+}
+
+.wrapper {
+    min-width: 960px;
+}
+nav {
+    height: 42px;
+    background-color: #4b6ea8;
+    border-radius: 5px;
+}
+nav p {
+    color: white;
+    font-weight: bold;
+    margin: 0 0 0 15px;
+    line-height: 42px;
+}
+.main {
+    margin-top: 63px;
+    margin-left: 15px;
+}
+.times {
+    width: 85px;
+    height: 720px;
+    float: left;
+}
+.calendar-container {
+    width: 600px;
+    padding: 0 10px;
+    height: 720px;
+    background-color: #ececec;
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+}
+.time-slot {
+    height: 60px;
+    overflow: visible;
+    text-align: right;
+    position: relative;
+    top: -5px;
+    font-size: 12px;
+}
+.time-slot p {
+    margin: 0 10px 12px 0;
+    position: relative;
+    top: -3px;
+}
+.time-slot span, .half {
+    color: #c5c5c5;
+    font-size: smaller;
+}
+.half {
+    margin-right: 10px;
+}
+.clearfix {
+    clear: both;
+}
+.event {
+    background-color: white;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+}
+.event .border-blue {
+    background-color: #4b6ea9;
+    width: 5px;
+    height: 100%;
+    float: left;
+}
+.title {
+    padding-top: 5px;
+    color: #4c6ea9;
+    font-size: large;
+}
+.event p  {
+    margin: 0 15px;
+}
+
+.location {
+    color: grey;
+    font-size: small;
+}
