@@ -7,7 +7,7 @@ var events = [
 ];
 
 var W;
-var MAX = 580;
+var MAX = 600 - 10 - 10;
 
 var eventHtml = '<div class="event"><div class="border-blue"></div><p class="title">Sampe Item</p><p class="location">Sample Location</p><div class="clearfix"></div></div>';
 
@@ -15,16 +15,19 @@ var eventHtmlHalf ='<div class="event"><div class="border-blue"></div><span clas
 
 
 var collideItemCount = function(min, max, array){
-    var count = 0;
-    
+    var maxNumber = 1;
     for(var i = min; i <= max; i++){
-
+        var count = 0;
         for(var j = 0; j< array.length; j++) {
             if(array[j].start<= i && array[j].end >= i) {
-                
+                count++;
             }
-        }   
+        }
+        if(count >= maxNumber) {
+            maxNumber = count;
+        }
     }
+    return maxNumber;
 };
 
 var infoEvents = function(events){
@@ -65,64 +68,52 @@ var infoEvents = function(events){
                 maxTime = array[j].end;
             }
         }
-        collideItemCount(minTime, maxTime, array);
+        maxCollide = collideItemCount(minTime, maxTime, array);
+        sets[k].push(maxCollide);
     }
+    return sets;
 };
 
-
-
-
-var isOverLapping =  function(event){
-
-    // "calendar" on line below should ref the element on which fc has been called 
-    for(var i = 0 ; i < events.length; i++) {
-        if (event.end >= events[i].start && event.start <= events[i].end) {
-            return true;
-        }
-    }
-    return false;
-};
-
-
-var setHeight = function(event){
-    var height = event.end - event.start;
-    return height;
-};
-
-
-var setNode = function(node, event){
-    var top = event.start;
-    node.css('top', top);
-    var height = setHeight(event);
-    node.css('height', height);
-    
-    
-    return node;
-};
 
 
 var layOutDay = function(events){
-    var nodes = [];
-    for( var i = 0; i < events.length; i++) {
-        var height = setHeight(events[i]);
-        if (height === 30) {
-            nodes[i] = eventHtmlHalf;  
-            nodes[i] = setNode($(nodes[i]), events[i]);
-            
-            $(".calendar-container").append($(nodes[i]));
-        }
-        else {
-            nodes[i] = eventHtml;
-            nodes[i] = setNode($(nodes[i]), events[i]);
-            
-            $(".calendar-container").append($(nodes[i]));
+    var testEvents = events;
+    var nodes = infoEvents(testEvents);
+    for(var i = 0; i < nodes.length; i++) {
+        var array = nodes[i];
+        W = MAX / array[array.length -1] + 'px';
+        for(var j = 0; j < array.length-1; j++){
+            var node;
+            var height = array[j].end - array[j].start;
+            var offset = j % array[array.length -1];
+            if(height === 30) {
+                 node = eventHtmlHalf;
+                 node = $(node).css({
+                    'top' : array[j].start,
+                    'height' : height,
+                    'width' : W,
+                     'left' : offset * (MAX / array[array.length -1]) + 10 + 'px' 
+                });
+                $(".calendar-container").append(node);
+            }
+            else {
+                node = eventHtml;
+                node = $(node).css({
+                    'top' : array[j].start,
+                    'height' : height,
+                    'width' : W,
+                    'left' : offset * (MAX / array[array.length -1]) + 10 +'px'
+                                   });
+                $(".calendar-container").append(node);
+            }
         }
     }
 };
 
 var init = function(){
-    layOutDay(events);
-    infoEvents(events);
+    console.log("please input layOutDay(events);");
+    console.log("You can also input like this:");
+    console.log("layOutDay([{start:90, end: 150}]);");
 };
 
 $(document).ready(function(){
